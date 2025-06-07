@@ -9,7 +9,7 @@ if (!$pergunta) {
     exit;
 }
 
-$apiKey = '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';
+$apiKey = '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';
 $url = 'https://openrouter.ai/api/v1/chat/completions';
 
 $data = [
