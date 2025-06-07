@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="chatavistural.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+  <title>Desktop Virtual</title>
+</head>
+
+<body>
+
+  <!-- Barra de tarefas -->
+  <div id="taskbar">
+    <div id="start-button">🪟</div>
+    <div id="taskbar-icons">
+      <!-- <div class="task-icon" data-window="chat-box">🤖</div> -->
+      <div class="task-icon" title="Terminal" data-window="terminal">💻</div>
+
+      <a href="https://github.com/herbertonline1" class="task-icon" title="github" data-window="browser"
+        target="_blank">🌐</a>
+      <a href="https://www.linkedin.com/in/herbert-frontend/" class="task-icon" data-window="linkedin" target="_blank"
+        title="LinkedIn">🔗</a>
+      <a class="task-icon" data-window="explorer">📁</a>
+
+
+    </div>
+    <div id="internet-status" title="Conectado à Internet">📺</div>
+<div id="taskbar-clock"></div>
+
+  </div>
+
+
+
+<!-- Área de trabalho -->
+<div id="desktop">
+  <div class="task-icon" id="desktop-icon" data-window="terminal" title="Terminal">
+  💻<br><span>Terminal</span>
+</div>
+  <a href="https://meu-portifolio-63b173.netlify.app/" target="_blank" class="desktop-icon" title="Abrir Contato">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Google_Chrome_icon_%28March_2011%29.svg/640px-Google_Chrome_icon_%28March_2011%29.svg.png" alt="Google Chrome" style="width:32px;height:32px;display:block;margin:0 auto 4px;" />
+    <span>Herbert-Contato</span>
+  </a>
+  
+  <a href="https://github.com/herbertonline1" target="_blank" class="desktop-icon" title="Abrir GitHub">
+    🌐<br><span>Herbert-GitHub</span>
+  </a>
+  <a href="https://www.linkedin.com/in/herbert-frontend/" target="_blank" class="desktop-icon" title="Abrir LinkedIn">
+    🔗<br><span>Herbert-LinkedIn</span>
+  </a>
+ <div class="desktop-icon" data-window="explorer" title="Abrir Explorador">
+  📁<br><span>Explorador</span>
+</div>
+
+  
+  <div class="desktop-icon" data-window="manual" title="Abrir Manual do Sistema">
+  🗒️<br><span>Manual Sistema.txt</span>
+</div>
+
+  
+</div>
+
+</div>
+
+
+
+
+
+  <!-- Menu iniciar -->
+ <div id="start-menu">
+  <div class="start-content">
+    <strong>Menu</strong>
+    <button class="start-option" data-window="terminal">💻 Abrir Terminal</button>
+    <button class="start-option" onclick="window.open('https://github.com/herbertonline1')">🌐 Abrir GitHub</button>
+    <button class="start-option" onclick="window.open('https://www.linkedin.com/in/herbert-frontend/')">🔗 Abrir LinkedIn</button>
+    <button class="start-option" data-window="explorer">📁 Abrir Explorador</button>
+    
+    <button class="start-option" data-window="manual">🗒️ Manual do Sistema</button>
+    <button class="start-option" data-window="wallpaper-selector">🖼️ Trocar Papel de Parede</button>
+    <button class="start-option" id="shutdown-button">🛑 Desligar Sistema</button>
+
+  </div>
+</div>
+
+
+
+<!-- Mini janela para escolher papel de parede -->
+<div id="wallpaper-selector" class="window hidden draggable" style="top: 100px;  width: 400px;">
+  <div class="window-header">
+    <div class="window-title">Escolher Papel de Parede</div>
+    <div class="window-controls">
+      <button class="btn-close" data-window="wallpaper-selector">✖</button>
+    </div>
+  </div>
+  <div class="window-body" style="padding: 10px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+      <img src="img/pexels-bess-hamiti-83687-36487.jpg" class="wallpaper-option" title="Fundo 1" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-david-besh-884788.jpg" class="wallpaper-option" title="Fundo 2" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-julius-silver-240301-753626.jpg" class="wallpaper-option" title="Fundo 3" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-markusspiske-1089438.jpg" class="wallpaper-option" title="Fundo 4" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-markusspiske-193350.jpg" class="wallpaper-option" title="Fundo 5" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-nicole-avagliano-1132392-2312040.jpg" class="wallpaper-option" title="Fundo 6" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-nicole-avagliano-1132392-2706654.jpg" class="wallpaper-option" title="Fundo 7" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-pixabay-33045.jpg" class="wallpaper-option" title="Fundo 8" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-scottwebb-1048039.jpg" class="wallpaper-option" title="Fundo 9" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-sebastiaan9977-1097456.jpg" class="wallpaper-option" title="Fundo 10" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-thatguycraig000-1563356.jpg" class="wallpaper-option" title="Fundo 11" style="width: 100%; cursor: pointer;" />
+      <img src="img/pexels-lulizler-3165335.jpg" class="wallpaper-option" title="Fundo 12" style="width: 100%; cursor: pointer;" />
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Janela: Terminal -->
+  <div id="terminal" class="window hidden draggable" style="top: 60px;">
+    <div class="window-header">
+      <div class="window-title">Terminal Linux</div>
+      <div class="window-controls">
+        <button class="btn-close" data-window="terminal">✖</button>
+      </div>
+    </div>
+    <pre id="terminal-output" tabindex="0" aria-live="polite" aria-label="Terminal output"></pre>
+    <div id="terminal-input-container">
+      <span id="terminal-prompt">user@desktop:~$</span>
+      <input type="text" id="terminal-input" autocomplete="off" spellcheck="false" autofocus />
+    </div>
+  </div>
+
+  <!-- Botão flutuante do chat -->
+  <div id="chat-button" title="Abrir chat">🤖</div>
+
+  <!-- Janela: Chat -->
+  <div id="chat-box">
+    <div id="chat-header">
+      <span>Assistente Virtual IA</span>
+      <div style="display: flex; align-items: center;">
+        <label>
+          <input type="checkbox" id="voice-toggle" style="margin-right: 5px;" />
+          IA com voz
+        </label>
+        <div id="voice-controls">
+          <button id="play-voice" type="button" title="Tocar resposta">🔊</button>
+        </div>
+      </div>
+    </div>
+    <div id="chat-messages"></div>
+    <form id="chat-form">
+      <input type="text" id="chat-input" placeholder="Digite aqui..." autocomplete="off" />
+      <button type="submit">⮞</button>
+    </form>
+  </div>
+
+
+
+<!-- Janela: Manual do Sistema -->
+<div id="manual" class="window hidden draggable" style="top: 80px;  width: 500px;">
+  <div class="window-header">
+    <div class="window-title">Manual do Sistema.txt</div>
+    <div class="window-controls">
+      <button class="btn-close" data-window="manual">✖</button>
+    </div>
+  </div>
+  <div class="window-body" style="padding: 0;">
+    <textarea id="manual-textarea" style="
+      width: 100%;
+      height: 300px;
+      border: none;
+      resize: none;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      box-sizing: border-box;
+    ">Bem-vindo ao Desktop Virtual Herbert Ramos!
+
+📁 Explorador – Acesse Alguns dos projetos de Herbert.
+💻 Terminal – Simula um terminal Linux.
+🤖 Assistente – IA para você fazer qualquer tipo de pergunta.
+🌐 GitHub – Acesse meu portfólio no GitHub.
+🔗 LinkedIn – Veja meu perfil profissional.
+
+✔️ Dica: Abra o Terminal e digite "help" para ver os comandos disponíveis.
+✔️ Clique nos ícones para abrir janelas.
+✔️ Use a barra de tarefas para alternar ou encerrar janelas.
+✔️ Pode trocar o papel de Parede.
+
+Dúvidas? Fale com o Assistente! 🤖
+    </textarea>
+  </div>
+</div>
+
+
+
+<div id="shutdown-screen">
+  <div style="text-align: center;">
+    🖥️ <strong>Sistema Desligado</strong><br><br>
+    <button id="power-on-button" style="
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #00cc66;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    ">
+      🔁 Ligar Sistema
+    </button>
+  </div>
+</div>
+
+
+<div id="boot-loading" class="hidden">
+  <div class="loading-content">
+    <div class="spinner"></div>
+    <p>Inicializando sistema...</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Janela: Explorador de Arquivos -->
+<div id="explorer" class="window hidden draggable" style="top: 120px; width: 500px; height: auto;">
+  <div class="window-header">
+    <div class="window-title">Explorador de Projetos</div>
+    <div class="window-controls">
+      <button class="btn-close" data-window="explorer">✖</button>
+    </div>
+  </div>
+  <div class="window-body" style="padding: 10px; display: flex; flex-direction: column; gap: 10px; position: relative;">
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/palavra-secreta.png">
+      📁 Projetos - Palavra secreta
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://palavra-secreta-reactjs.netlify.app/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Projeto</a>
+      <a href="https://github.com/herbertonline1/palvrasecreta.git" target="_blank" class="file-link" style="display:block;">💻 GitHub do Projeto</a>
+      </div>
+    </div>
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/raspadinha.png">
+      📁 Projetos - Raspadinha Folia
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://raspadinha-gs-folia.vercel.app/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Projeto</a>
+      <a href="https://github.com/herbertonline1/Raspadinha_GS_Folia" target="_blank" class="file-link" style="display:block;">💻 GitHub do Projeto</a>
+      </div>
+    </div>
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/cronometro.png">
+      📁 Projetos - Cronometro
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://cronometro-972101.netlify.app/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Projeto</a>
+      <a href="https://github.com/herbertonline1/Cronometro" target="_blank" class="file-link" style="display:block;">💻 GitHub do Projeto</a>
+      </div>
+    </div>
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/cadastro.png">
+      📁 Projetos - Cadastro Cliente
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://cadastro-cliente-gs-0a13ac.netlify.app/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Projeto</a>
+      <a href="https://github.com/herbertonline1/cadastrocliente" target="_blank" class="file-link" style="display:block;">💻 GitHub do Projeto</a>
+      </div>
+    </div>
+     <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/biblia.png">
+      📁 Projetos - Biblia
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://biblia-git-main-herberts-projects-71d7a20e.vercel.app/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Projeto</a>
+      <a href="https://github.com/herbertonline1/projetobiblia" target="_blank" class="file-link" style="display:block;">💻 GitHub do Projeto</a>
+      </div>
+    </div>
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/linkdein.png">
+      📁 Projetos - LinkedIn Profissional
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://www.linkedin.com/in/herbert-frontend/" target="_blank" class="file-link" style="display:block;">🔗 Acessar Perfil</a>
+      </div>
+    </div>
+    <div class="file-link project-link folder-link" tabindex="0" style="cursor:pointer; position:relative;" data-preview="img/github.png">
+      📁 Projetos - GitHub para mais projetos
+      <div class="subfolder-links" style="display:none; margin-left:24px; margin-top:6px; flex-direction:column; gap:4px;">
+      <a href="https://github.com/herbertonline1" target="_blank" class="file-link" style="display:block;">🔗 Acessar GitHub</a>
+      </div>
+    </div>
+    <script>
+      // Subpasta toggle para todas as pastas de projetos
+      document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.folder-link').forEach(folder => {
+        folder.addEventListener('click', function(e) {
+        // Evita abrir link se clicar em sublink
+        if (e.target.tagName === 'A') return;
+        const sub = folder.querySelector('.subfolder-links');
+        if (sub) {
+          sub.style.display = (sub.style.display === 'none' || sub.style.display === '') ? 'flex' : 'none';
+        }
+        });
+        // Acessibilidade: abrir com Enter
+        folder.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const sub = folder.querySelector('.subfolder-links');
+          if (sub) {
+          sub.style.display = (sub.style.display === 'none' || sub.style.display === '') ? 'flex' : 'none';
+          }
+        }
+        });
+      });
+      });
+    </script>
+    <!-- <a href="#" onclick="alert('Arquivo: Sobre.txt\nAutor: Herbert Ramos');" class="file-link">📄 Sobre.txt</a> -->
+    <img id="project-preview-img" src="" alt="Prévia do projeto" style="display:none; position:absolute; right:10px; top:10px; width:180px; height:auto; border:1px solid #ccc; box-shadow:0 2px 8px rgba(0,0,0,0.15); background:#fff; z-index:10; pointer-events:none;" />
+    <!-- <a href="#" onclick="alert('Arquivo: Sobre.txt\nAutor: Herbert Ramos');" class="file-link">📄 Sobre.txt</a> -->
+    <img id="project-preview-img" src="" alt="Prévia do projeto" style="display:none; position:absolute; right:10px; top:10px; width:180px; height:auto; border:1px solid #ccc; box-shadow:0 2px 8px rgba(0,0,0,0.15); background:#fff; z-index:10; pointer-events:none;" />
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const previewImg = document.getElementById('project-preview-img');
+      document.querySelectorAll('.project-link').forEach(link => {
+        link.addEventListener('mouseenter', function(e) {
+          const imgSrc = link.getAttribute('data-preview');
+          if (imgSrc) {
+            previewImg.src = imgSrc;
+            previewImg.style.display = 'block';
+            // Ajusta a posição se necessário
+            const rect = link.getBoundingClientRect();
+            previewImg.style.top = (link.offsetTop - 10) + 'px';
+          }
+        });
+        link.addEventListener('mouseleave', function() {
+          previewImg.style.display = 'none';
+          previewImg.src = '';
+        });
+      });
+    });
+  </script>
+</div>
+<!-- FIM Janela: Explorador de Arquivos -->
+
+</body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+  // Abrir janelas
+  document.querySelectorAll('[data-window]').forEach(icon => {
+    icon.addEventListener('click', () => {
+      const windowId = icon.getAttribute('data-window');
+      const win = document.getElementById(windowId);
+      if (win) {
+        win.classList.remove('hidden');
+      } else {
+        console.warn("Janela não encontrada:", windowId);
+      }
+    });
+  });
+
+  // Fechar janelas
+  document.querySelectorAll('.btn-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const winId = btn.getAttribute('data-window');
+      const win = document.getElementById(winId);
+      if (win) {
+        win.classList.add('hidden');
+      }
+    });
+  });
+});
+
+
+
+
+// Trocar papel de parede
+document.addEventListener('DOMContentLoaded', () => {
+  // Trocar papel de parede
+  document.querySelectorAll('.wallpaper-option').forEach(img => {
+    img.addEventListener('click', () => {
+      const url = img.getAttribute('src');
+      const desktop = document.getElementById('desktop');
+      if (desktop) {
+        desktop.style.backgroundImage = `url('${url}')`;
+      } else {
+        console.error('Elemento #desktop não encontrado');
+      }
+    });
+  });
+});
+
+
+
+// Script para o botão de desligar e ligar o sistema
+const shutdownBtn = document.getElementById('shutdown-button');
+const shutdownScreen = document.getElementById('shutdown-screen');
+const powerOnBtn = document.getElementById('power-on-button');
+const bootScreen = document.getElementById('boot-loading');
+
+document.body.classList.remove('system-on'); // começa desligado
+
+if (shutdownBtn) {
+  shutdownBtn.addEventListener('click', () => {
+    shutdownScreen.classList.remove('hidden');
+    document.body.classList.remove('system-on');
+  });
+}
+
+if (powerOnBtn) {
+  powerOnBtn.addEventListener('click', () => {
+    shutdownScreen.classList.add('hidden');
+    bootScreen.classList.remove('hidden');
+    document.body.classList.remove('system-on');
+
+    setTimeout(() => {
+      bootScreen.classList.add('hidden');
+      document.body.classList.add('system-on');
+    }, 3000); // tempo de inicialização
+  });
+}
+
+//FIM Script para o botão de desligar e ligar o sistema
+
+</script>
+
+</html>

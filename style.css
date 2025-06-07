@@ -1,0 +1,430 @@
+ /* Reset básico */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; font-family: monospace, monospace; 
+      /* background: #1e1e1e;  */
+      color: #c5c6c7;
+      height: 100vh; overflow: hidden;
+      user-select: none;
+    }
+
+    /* Barra de tarefas */
+    #taskbar {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: #121212;
+      display: flex; align-items: center; padding: 0 10px;
+      color: #ccc;
+      font-size: 18px;
+      user-select: none;
+      z-index: 1000;
+    }
+    #start-button {
+      cursor: pointer;
+      margin-right: 15px;
+      user-select: none;
+    }
+    #taskbar-icons {
+      display: flex;
+      gap: 12px;
+      flex-grow: 1;
+    }
+    .task-icon {
+      cursor: pointer;
+      user-select: none;
+      padding: 5px 8px;
+      border-radius: 4px;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .task-icon:hover {
+      background: #333;
+    }
+    #taskbar-clock {
+      min-width: 50px;
+      text-align: right;
+      font-family: monospace;
+    }
+
+   /* Menu iniciar estilo Windows 11 */
+#start-menu {
+  position: fixed;
+  bottom: 60px;
+  left: 20px;
+  width: 260px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  color: #ffffff;
+  font-size: 14px;
+  display: none;
+  z-index: 1100;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+
+/* Título */
+#start-menu .start-content strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+/* Botões do menu */
+#start-menu .start-option {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #fff;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+#start-menu .start-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+
+    /* Janela básica */
+    .window {
+      position: fixed;
+      top: 50px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      max-width: 95vw;
+      height: 400px;
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #0008 inset;
+      display: flex;
+      flex-direction: column;
+      color: #eee;
+      z-index: 1200;
+      user-select: text;
+    }
+    .window.hidden {
+      display: none;
+    }
+
+    /* Header da janela (barra título) */
+    .window-header {
+      background: #222;
+      padding: 8px 12px;
+      cursor: grab;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 14px;
+      border-bottom: 1px solid #444;
+    }
+    .window-header .window-title {
+      user-select: none;
+    }
+    .window-header .window-controls button {
+      background: transparent;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 16px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .window-header .window-controls button:hover {
+      background: #555;
+    }
+
+    /* Terminal output */
+    #terminal-output {
+      flex-grow: 1;
+      padding: 10px;
+      background: #0a0a0a;
+      color: #eee;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.3em;
+      white-space: pre-wrap;
+      user-select: text;
+    }
+
+    /* Terminal input container */
+    #terminal-input-container {
+      border-top: 1px solid #333;
+      background: #111;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      font-family: monospace;
+      font-size: 14px;
+      color: #eee;
+    }
+    #terminal-prompt {
+      user-select: none;
+      margin-right: 6px;
+      white-space: nowrap;
+    }
+    #terminal-input {
+      flex-grow: 1;
+      background: transparent;
+      border: none;
+      color: #eee;
+      font-family: monospace;
+      font-size: 14px;
+      outline: none;
+      caret-color: #0f0;
+    }
+
+
+
+
+
+    #wallpaper-selector {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-family: sans-serif;
+  z-index: 10000;
+  cursor: pointer;
+}
+
+#wallpaper-selector input {
+  display: none;
+}
+
+#wallpaper-selector label {
+  cursor: pointer;
+}
+
+
+#internet-status {
+  margin-right: 10px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+
+
+#desktop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 40px; /* deixa espaço para a barra de tarefas */
+  padding: 10px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.desktop-icon {
+  width: 80px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.desktop-icon span {
+  display: block;
+  font-size: 12px;
+  margin-top: 5px;
+  color: white;
+}
+
+#desktop-icon{
+    width: 80px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+#desktop-icon span{
+    display: block;
+  font-size: 12px;
+  margin-top: 5px;
+  color: white;
+}
+
+
+
+.hidden {
+  display: none;
+}
+
+
+#manual-textarea {
+  width: 100%;
+  height: 300px;
+  border: none;
+  resize: none;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+
+
+#desktop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 40px; /* altura da taskbar */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('img/walppape.jpg'); /* imagem padrão */
+  z-index: 0;
+}
+
+
+.wallpaper-option {
+  border-radius: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.wallpaper-option:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+
+
+
+
+/* #shutdown-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+  filter: grayscale(1);
+}
+
+#shutdown-screen.active {
+  opacity: 1;
+  pointer-events: all;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+/* Ocultar elementos do sistema quando não estiver ligado */
+body:not(.system-on) #taskbar,
+body:not(.system-on) #desktop,
+body:not(.system-on) #start-menu,
+body:not(.system-on) #chat-box,
+body:not(.system-on) .window,
+body:not(.system-on) #chat-button {
+  display: none !important;
+}
+
+/* Tela de sistema desligado e carregando */
+#shutdown-screen,
+#boot-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #111;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  flex-direction: column;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Spinner animado */
+.spinner {
+border: 6px solid #333;
+border-top: 6px solid #00ccff;
+border-radius: 50%;
+width: 60px;
+height: 60px;
+animation: spin 1s linear infinite;
+margin-bottom: 20px;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+
+
+.file-link {
+  text-decoration: none;
+  color: #0078D4;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.file-link:hover {
+  background-color: #d0e7ff;
+}
