@@ -83,23 +83,23 @@ const commands = {
   sobre: () => `Este é um terminal simulado com comandos básicos. Desenvolvido por Herbert.`,
   chat: () => `um assistente virtual que pode responder perguntas e ajudar com tarefas simples. Digite "chatbot" para abrir o chat.`,
   chatbot: () => {
-     {
-    const chatBox = document.getElementById("chat-box");
-    if (chatBox.style.display === "none" || chatBox.style.display === "") {
-      chatBox.style.display = "flex";
-      setTimeout(() => {
-        const chatInput = document.getElementById("chat-input");
-        if (chatInput) chatInput.focus();
-      }, 100);
-      return "Abrindo assistente virtual...";
+    {
+      const chatBox = document.getElementById("chat-box");
+      if (chatBox.style.display === "none" || chatBox.style.display === "") {
+        chatBox.style.display = "flex";
+        setTimeout(() => {
+          const chatInput = document.getElementById("chat-input");
+          if (chatInput) chatInput.focus();
+        }, 100);
+        return "Abrindo assistente virtual...";
+      }
+      return "O assistente virtual já está aberto.";
     }
-    return "O assistente virtual já está aberto.";
-  }
   },
   poweroff: () => {
-const shutdownScreen = document.getElementById('shutdown-screen');
+    const shutdownScreen = document.getElementById('shutdown-screen');
     shutdownScreen.classList.remove('hidden');
-   
+
 
   },
   linkedin: () => {
@@ -115,7 +115,7 @@ const shutdownScreen = document.getElementById('shutdown-screen');
     return "Abrindo manual do usuário...";
   },  // Histórico simples
 
-  
+
 };
 
 // Histórico simples
@@ -219,6 +219,132 @@ document.querySelectorAll(".draggable").forEach(makeDraggable);
 
 
 
+/*
+ /**
+ * Lista de perguntas e respostas para a assistente virtual
+ */
+const faqList = [
+  {
+    question: "Qual é o seu nome?",
+    answer: "Eu sou sua assistente virtual!"
+  },
+  {
+    question: "Que horas são?",
+    answer: () => {
+      const now = new Date();
+      return `Agora são ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}.`;
+    }
+  },
+
+  {
+    question: "Qual o seu criador?",
+    answer: "Fui desenvolvida por Herbert."
+  },
+
+  {
+    question: "Fale um pouco sobre Herbert",
+    answer: "Herbert é um desenvolvedor Full-stak com experiência em HTML, CSS,JavaScript, PHP e Mysql. Ele gosta de criar interfaces de usuário interativas e acessíveis."
+  },
+  {
+    question: "Como entro em contato com Herbert?",
+    answer: "você pode enviar um email para herbertonline1@hotmail.com ou acessar o seu Portifolio, digite abra o portifolio."
+  },
+  {
+    question: "O que você pode fazer?",
+    answer: "Posso responder perguntas, fornecer informações básicas, abrir sites como LinkedIn e GitHub, e ajudar com tarefas simples relacionadas ao sistema."
+  },
+  {
+    question: "Como acessar o manual?",
+    answer: "Digite 'manual' no terminal ou clique na opção Manual do Usuário."
+  },
+  {
+    question: "O que esse sistema faz?",
+    answer: "Este é um sistema simulado que imita um desktop com funcionalidades básicas como terminal, assistente virtual e manual do usuário."
+  },
+  {
+    question: "pode abrir algum site?",
+    answer: "Sim, posso abrir sites como LinkedIn e GitHub. Basta pedir, por exemplo: 'Abra o LinkedIn' ou 'Abra o GitHub'."
+  },
+  {
+    question: "Desligue o sistema",
+    answer: () => {
+      const shutdownScreen = document.getElementById('shutdown-screen');
+      shutdownScreen.classList.remove('hidden');
+      return "Desligando o sistema...";
+    }
+  },
+  {
+    question: "Abra o manual",
+    answer: () => {
+      toggleWindow("manual");
+      return "Abrindo o manual do usuario...";
+    }
+  },
+  {
+    question: "mudar papel de parede",
+    answer: () => {
+      toggleWindow("wallpaper-selector");
+      return "Abrindo as opções de papeis de parede...";
+    }
+  },
+
+  {
+    question: "Abra o Terminal",
+    answer: () => {
+      toggleWindow("terminal");
+      return "Abrindo o Terminal Linux...";
+    }
+  },
+  {
+    question: "Abra o explorador",
+    answer: () => {
+      toggleWindow("explorer");
+      return "Abrindo explorador de arquivos...";
+    }
+  },
+   {
+    question: "Abra o portifolio",
+    answer: () => {
+      window.open("https://meu-portifolio-63b173.netlify.app/", "_blank");
+      return "Abrindo Portifolio de Herbert...";
+    }
+  },
+  {
+    question: "Abra o LinkedIn",
+    answer: () => {
+      window.open("https://www.linkedin.com/in/herbert-frontend/", "_blank");
+      return "Abrindo LinkedIn...";
+    }
+  },
+  {
+    question: "Abra o GitHub",
+    answer: () => {
+      window.open("https://github.com/herbertonline1", "_blank");
+      return "Abrindo GitHub...";
+    }
+  }
+];
+
+
+
+
+// Função para procurar resposta na lista FAQ
+function findFaqAnswer(userQuestion) {
+  const lower = userQuestion.toLowerCase();
+  for (const faq of faqList) {
+    if (lower.includes(faq.question.toLowerCase())) {
+      return typeof faq.answer === "function" ? faq.answer() : faq.answer;
+    }
+  }
+  return null;
+}
+
+// Função que retorna a mensagem de ajuda
+function getHelpMessage() {
+  const perguntas = faqList.map(faq => `- ${faq.question}`).join("<br>");
+  return `Aqui estão algumas perguntas que você pode me fazer:<br>${perguntas}`;
+}
+
 // JAVASCRIPT PARA O CHAT ASSISTENTE-------------------------------------------------------------------------
 
 const chatButton = document.getElementById("chat-button");
@@ -278,27 +404,33 @@ chatForm.addEventListener("submit", function (e) {
   if (!userName) {
     userName = message;
     localStorage.setItem("userName", userName);
-    const greeting = `Prazer em conhecer você, ${userName}. Como posso te ajudar hoje?`;
+    const greeting = `Prazer em conhecer você, ${userName}. Como posso te ajudar hoje? ou então digite 'manual' para ver o que posso fazer.`;
     appendMessage("Assistente", greeting, "bot");
     botSpeak(greeting);
     return;
   }
 
-  fetch("responder.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: "pergunta=" + encodeURIComponent(message) + "&nome=" + encodeURIComponent(userName)
-  })
-    .then(res => res.text())
-    .then(resposta => {
-      appendMessage("Assistente", resposta, "bot");
-      botSpeak(resposta);
-    })
-    .catch(err => {
-      appendMessage("Assistente", "Falha ao conectar com o servidor.", "bot");
-      botSpeak("Desculpe, houve um erro na conexão.");
-      console.error(err);
-    });
+  // Verifica se o usuário pediu ajuda
+  const helpWords = ["ajuda", "manual", "help"];
+  if (helpWords.includes(message.toLowerCase())) {
+    const helpMessage = getHelpMessage();
+    appendMessage("Assistente", helpMessage, "bot");
+    botSpeak(helpMessage.replace(/<br>/g, ". "));
+    return;
+  }
+
+  // Verifica se a pergunta está na lista FAQ
+  const faqAnswer = findFaqAnswer(message);
+  if (faqAnswer) {
+    appendMessage("Assistente", faqAnswer, "bot");
+    botSpeak(faqAnswer);
+    return;
+  }
+
+  // Resposta padrão se não encontrar na FAQ
+  const defaultMsg = "Desculpe, ainda não sei responder essa pergunta. Tente outra ou digite 'manual' para ver o que posso fazer.";
+  appendMessage("Assistente", defaultMsg, "bot");
+  botSpeak(defaultMsg);
 });
 
 function appendMessage(sender, text, type) {
@@ -366,10 +498,8 @@ function greetUser(name) {
 playVoice.addEventListener("click", () => {
   if (!voiceEnabled) return;
   if (isSpeaking) {
-    // Pausar (cancelar)
     stopSpeech();
   } else {
-    // Reproduzir a última fala
     const lastBotMessage = [...chatMessages.querySelectorAll(".msg.bot")].pop();
     if (lastBotMessage) {
       const text = lastBotMessage.textContent.replace("Assistente:", "").trim();
@@ -382,6 +512,7 @@ stopVoice.addEventListener("click", () => {
   if (!voiceEnabled) return;
   stopSpeech();
 });
+
 
 // Inicializa estado do botão Stop desabilitado
 stopVoice.disabled = true;
