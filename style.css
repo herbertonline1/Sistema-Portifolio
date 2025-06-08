@@ -428,3 +428,90 @@ margin-right: auto;
 .file-link:hover {
   background-color: #d0e7ff;
 }
+
+
+
+
+
+
+
+
+
+/* // Jogos Campo Minado e cobrinha */
+#minesweeper {
+  display: grid;
+  gap: 2px;
+  justify-content: center;
+}
+
+.cell {
+  width: 30px;
+  height: 30px;
+  background: #b3c0c8;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  border: 1px solid #7b8a94;
+  user-select: none;
+}
+
+.cell.revealed {
+  background: #e0e5e8;
+  cursor: default;
+  border: 1px solid #aaa;
+}
+
+.cell.bomb {
+  background: red;
+  color: white;
+}
+
+.cell.flagged {
+  background: #f5d142;
+}
+
+
+
+#snake-canvas {
+  background-color: #000;
+}
+/* //FIM Jogos Campo Minado e cobrinha */
+
+
+
+
+.submenu-container {
+  position: relative;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: #f0f0f0;
+  border-left: 1px solid #ccc;
+  min-width: 180px;
+  z-index: 10;
+}
+
+.submenu-option {
+  display: block;
+  width: 100%;
+  padding: 6px 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.submenu-option:hover {
+  background-color: #e0e0e0;
+}
+
+/* Mostrar submenu ao passar o mouse */
+.submenu-container:hover .submenu {
+  display: block;
+}
