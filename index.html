@@ -70,22 +70,74 @@
 
 
 
-  <!-- Menu iniciar -->
- <div id="start-menu">
+<!-- Menu iniciar -->
+<div id="start-menu">
   <div class="start-content">
     <strong>Menu</strong>
+
     <button class="start-option" data-window="terminal">💻 Abrir Terminal</button>
     <button class="start-option" onclick="window.open('https://github.com/herbertonline1')">🌐 Abrir GitHub</button>
     <button class="start-option" onclick="window.open('https://www.linkedin.com/in/herbert-frontend/')">🔗 Abrir LinkedIn</button>
     <button class="start-option" data-window="explorer">📁 Abrir Explorador</button>
-    
     <button class="start-option" data-window="manual">🗒️ Manual do Sistema</button>
     <button class="start-option" data-window="wallpaper-selector">🖼️ Trocar Papel de Parede</button>
-    <button class="start-option" id="shutdown-button">🛑 Desligar Sistema</button>
 
+    <!-- Submenu Jogos -->
+    <div class="start-option submenu-container">
+      🎮 Jogos ▸
+      <div class="submenu">
+        <button class="submenu-option" data-window="campo-minado">🧨 Campo Minado</button>
+        <button class="submenu-option" data-window="snake-game">🐍 Cobrinha</button>
+      </div>
+    </div>
+
+    <button class="start-option" id="shutdown-button">🛑 Desligar Sistema</button>
   </div>
 </div>
 
+
+<!-- JOGO CAMPO MINADO e COBRINHA -->
+<div class="window" id="campo-minado" style="display: none;">
+  <div class="window-header">
+    <span>🎮 Campo Minado</span>
+    <button class="close-button" onclick="closeWindow('campo-minado')">✖</button>
+  </div>
+  <div class="window-body">
+    <div style="margin-bottom: 10px;">
+      <label for="difficulty">Dificuldade:</label>
+      <select id="difficulty">
+        <option value="easy">Fácil</option>
+        <option value="medium" selected>Médio</option>
+        <option value="hard">Difícil</option>
+      </select>
+      <button onclick="startGame()">🎮 Novo Jogo</button>
+      <span style="float: right;">
+        ⏱️ <span id="timer">0</span>s |
+        🚩 <span id="flag-count">0</span>
+      </span>
+    </div>
+    <div id="minesweeper"></div>
+  </div>
+</div>
+
+
+
+
+<div class="window" id="snake-game" style="display: none;">
+  <div class="window-header">
+    <span>🐍 Jogo da Cobrinha</span>
+    <button class="close-button" onclick="closeWindow('snake-game')">✖</button>
+  </div>
+  <div class="window-body">
+    <div style="margin-bottom: 10px;">
+      <button onclick="startSnakeGame()">🎮 Novo Jogo</button>
+      <span style="float: right;">🏆 Pontos: <span id="snake-score">0</span></span>
+    </div>
+    <canvas id="snake-canvas" width="300" height="300" style="border: 1px solid #333; display: block; margin: auto;"></canvas>
+  </div>
+</div>
+
+<!--FIM JOGO CAMPO MINADO e COBRINHA -->
 
 
 <!-- Mini janela para escolher papel de parede -->
@@ -179,7 +231,7 @@
     ">Bem-vindo ao Desktop Virtual Herbert Ramos!
 
 📁 Explorador – Acesse Alguns dos projetos de Herbert.
-💻 Terminal – Simula um terminal Linux Digite "help" no terminal.
+💻 Terminal – Simula um terminal Linux, digite "help" no terminal
 🤖 Assistente – Para lhe ajudar com relação ao sistema digite "ajuda".
 🌐 GitHub – Acesse meu portfólio no GitHub.
 🔗 LinkedIn – Veja meu perfil profissional.
@@ -419,6 +471,271 @@ if (powerOnBtn) {
 
 //FIM Script para o botão de desligar e ligar o sistema
 
+
+
+
+// Jogos Campo Minado e cobrinha
+let timerInterval;
+let flagsUsed = 0;
+let totalBombs = 0;
+let gameStarted = false;
+
+function startGame() {
+  const difficulty = document.getElementById('difficulty').value;
+  let rows, cols, bombs;
+
+  if (difficulty === 'easy') {
+    rows = cols = 8;
+    bombs = 10;
+  } else if (difficulty === 'medium') {
+    rows = cols = 12;
+    bombs = 20;
+  } else {
+    rows = cols = 16;
+    bombs = 40;
+  }
+
+  totalBombs = bombs;
+  flagsUsed = 0;
+  document.getElementById('flag-count').textContent = bombs;
+
+  clearInterval(timerInterval);
+  document.getElementById('timer').textContent = '0';
+  let time = 0;
+  timerInterval = setInterval(() => {
+    document.getElementById('timer').textContent = ++time;
+  }, 1000);
+
+  createMinesweeper(rows, cols, bombs);
+}
+
+function createMinesweeper(rows, cols, bombs) {
+  const container = document.getElementById('minesweeper');
+  container.innerHTML = '';
+  container.style.gridTemplateColumns = `repeat(${cols}, 30px)`;
+  const cells = [];
+  let bombPositions = new Set();
+
+  while (bombPositions.size < bombs) {
+    bombPositions.add(Math.floor(Math.random() * rows * cols));
+  }
+
+  for (let i = 0; i < rows * cols; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    cell.dataset.index = i;
+    if (bombPositions.has(i)) {
+      cell.dataset.bomb = 'true';
+    }
+    container.appendChild(cell);
+    cells.push(cell);
+  }
+
+  cells.forEach((cell, i) => {
+    cell.addEventListener('click', () => {
+      if (cell.classList.contains('flagged') || cell.classList.contains('revealed')) return;
+
+      if (cell.dataset.bomb === 'true') {
+        cell.classList.add('bomb');
+        cell.textContent = '💣';
+        revealAll(cells);
+        clearInterval(timerInterval);
+        alert('💥 Você perdeu!');
+      } else {
+        revealSafe(i, cells, cols, rows);
+      }
+    });
+
+    // Clique direito para marcar bandeira
+    cell.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      if (cell.classList.contains('revealed')) return;
+
+      if (cell.classList.contains('flagged')) {
+        cell.classList.remove('flagged');
+        cell.textContent = '';
+        flagsUsed--;
+      } else if (flagsUsed < bombs) {
+        cell.classList.add('flagged');
+        cell.textContent = '🚩';
+        flagsUsed++;
+      }
+      document.getElementById('flag-count').textContent = bombs - flagsUsed;
+    });
+  });
+}
+
+function revealSafe(index, cells, cols, rows) {
+  const cell = cells[index];
+  if (!cell || cell.classList.contains('revealed')) return;
+
+  cell.classList.add('revealed');
+  const neighbors = getNeighbors(index, cols, rows);
+  const bombCount = neighbors.filter(i => cells[i].dataset.bomb === 'true').length;
+
+  if (bombCount > 0) {
+    cell.textContent = bombCount;
+  } else {
+    neighbors.forEach(i => revealSafe(i, cells, cols, rows));
+  }
+}
+
+function getNeighbors(index, cols, rows) {
+  const result = [];
+  const x = index % cols;
+  const y = Math.floor(index / cols);
+
+  for (let dx = -1; dx <= 1; dx++) {
+    for (let dy = -1; dy <= 1; dy++) {
+      if (dx === 0 && dy === 0) continue;
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && nx < cols && ny >= 0 && ny < rows) {
+        result.push(ny * cols + nx);
+      }
+    }
+  }
+  return result;
+}
+
+function revealAll(cells) {
+  cells.forEach(cell => {
+    if (cell.dataset.bomb === 'true') {
+      cell.classList.add('bomb');
+      cell.textContent = '💣';
+    } else {
+      cell.classList.add('revealed');
+    }
+  });
+}
+
+// Função para abrir janelas com base no atributo data-window
+document.querySelectorAll('[data-window]').forEach(button => {
+  button.addEventListener('click', () => {
+    const windowId = button.getAttribute('data-window');
+    const win = document.getElementById(windowId);
+    if (win) {
+      win.style.display = 'block';
+    }
+  });
+});
+
+
+// Função para fechar janelas
+function closeWindow(id) {
+  const win = document.getElementById(id);
+  if (win) {
+    win.style.display = 'none';
+  }
+}
+
+
+// Quando a janela for aberta, cria o jogo
+document.querySelector('[data-window="campo-minado"]').addEventListener('click', () => {
+  createMinesweeper();
+});
+
+
+
+
+
+
+let snake, food, direction, gameInterval, snakeScore = 0;
+
+function startSnakeGame() {
+  const canvas = document.getElementById('snake-canvas');
+  const ctx = canvas.getContext('2d');
+  const box = 15;
+  const rows = canvas.height / box;
+  const cols = canvas.width / box;
+
+  snake = [{ x: 5, y: 5 }];
+  direction = 'RIGHT';
+  snakeScore = 0;
+  document.getElementById('snake-score').textContent = snakeScore;
+  food = {
+    x: Math.floor(Math.random() * cols),
+    y: Math.floor(Math.random() * rows)
+  };
+
+  clearInterval(gameInterval);
+  gameInterval = setInterval(draw, 100);
+
+  document.onkeydown = function (e) {
+    const key = e.key;
+    if (key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
+    else if (key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
+    else if (key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+    else if (key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+  };
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Desenhar cobrinha
+    for (let i = 0; i < snake.length; i++) {
+      ctx.fillStyle = i === 0 ? 'lime' : 'green';
+      ctx.fillRect(snake[i].x * box, snake[i].y * box, box, box);
+    }
+
+    // Desenhar comida
+    ctx.fillStyle = 'red';
+    ctx.fillRect(food.x * box, food.y * box, box, box);
+
+    // Nova cabeça
+    let head = { ...snake[0] };
+    if (direction === 'LEFT') head.x--;
+    if (direction === 'UP') head.y--;
+    if (direction === 'RIGHT') head.x++;
+    if (direction === 'DOWN') head.y++;
+
+    // Colisão
+    if (
+      head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows ||
+      snake.some(segment => segment.x === head.x && segment.y === head.y)
+    ) {
+      clearInterval(gameInterval);
+      alert('💥 Game Over! Sua pontuação: ' + snakeScore);
+      return;
+    }
+
+    // Comer comida
+    if (head.x === food.x && head.y === food.y) {
+      snakeScore++;
+      document.getElementById('snake-score').textContent = snakeScore;
+      food = {
+        x: Math.floor(Math.random() * cols),
+        y: Math.floor(Math.random() * rows)
+      };
+    } else {
+      snake.pop(); // não comeu, remove cauda
+    }
+
+    snake.unshift(head);
+  }
+}
+
+
+document.querySelectorAll('.start-option[data-window]').forEach(button => {
+  button.addEventListener('click', () => {
+    const windowId = button.getAttribute('data-window');
+    const win = document.getElementById(windowId);
+    if (win) {
+      win.style.display = 'block';
+      // Apenas abre a janela. O jogo só inicia com "Novo Jogo"
+    }
+  });
+});
+
+function closeWindow(id) {
+  const win = document.getElementById(id);
+  if (win) {
+    win.style.display = 'none';
+    if (id === 'snake-game') clearInterval(gameInterval); // Parar o jogo da cobrinha
+  }
+}
+
+//FIM Jogos Campo Minado e cobrinha
 </script>
 
 </html>
