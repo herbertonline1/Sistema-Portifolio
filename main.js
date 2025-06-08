@@ -243,7 +243,7 @@ const faqList = [
 
   {
     question: "Fale um pouco sobre Herbert",
-    answer: "Herbert é um desenvolvedor Full-stak com experiência em HTML, CSS,JavaScript, PHP e Mysql. Ele gosta de criar interfaces de usuário interativas e acessíveis."
+    answer: "Herbert é um desenvolvedor Full-Stack com experiência em HTML, CSS,JavaScript, PHP e   Mysql. Ele gosta de criar interfaces de usuário interativas e acessíveis."
   },
   {
     question: "Como entro em contato com Herbert?",
