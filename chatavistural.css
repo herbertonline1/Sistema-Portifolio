@@ -138,3 +138,13 @@
   height: 100%;
   z-index: 0;
 }
+
+@media (max-width: 768px) {
+#chat-box{
+  width: 70%;
+  max-width: 400px;
+  height: 80%;
+  bottom: 70px;
+  /* right: 10px; */
+}
+}
