@@ -71,13 +71,14 @@ const terminalInput = document.getElementById("terminal-input");
 
 // Simula comandos Linux básicos
 const commands = {
-  help: () => `Comandos disponíveis:\nhelp - mostra esta ajuda\nclear - limpa o terminal\nexit - fecha o terminal\nls - lista arquivos\npwd - mostra diretório atual\necho [texto] - exibe texto\ndata - data e hora atual\nwhoami - mostra usuário\ncontato - informações de contato\nsobre - informações sobre o terminal\nlinkedin - abre o LinkedIn\ngit - abre o GitHub\nmanual - abre o manual do usuário\nchat - Explica sobre Assistente Virtual\nchatbot - abre o assistente virtual com foco no input\npoweroff - desliga o sistema`,
+  help: () => `Comandos disponíveis:\nhelp - mostra esta ajuda\nclear - limpa o terminal\nexit - fecha o terminal\nls - lista arquivos\npwd - mostra diretório atual\necho [texto] - exibe texto\ndata - data e hora atual\nwhoami - mostra usuário\ncontato - informações de contato\nsobre - informações sobre o terminal\nlinkedin - abre o LinkedIn\ngit - abre o GitHub\nmanual - abre o manual do usuário\nchat - Explica sobre Assistente Virtual\nchatbot - abre o assistente virtual com foco no input\npoweroff - desliga o sistema\nifconfig - exibe informações de rede`,
   clear: () => { terminalOutput.textContent = ""; return ""; },
   exit: () => { toggleWindow("terminal"); return ""; },
   ls: () => `Desktop  Documentos  Downloads  Musicas  Fotos  Videos`,
   pwd: () => `/home/user`,
-  data: () => new Date().toString(),
+  data: () => new Date().toString() ,
   whoami: () => `user`,
+  ifconfig: () => `Interface: eth0\nEndereço IP:192.168.1.202\n255.255.255.0\n192.168.1.1`,
   echo: (args) => args.join(" "),
   contato: () => `Email: herbertonline1@hotmail.com \nFone: +55 81 99275-7332\nLinkedIn: https://www.linkedin.com/in/herbertonline/`,
   sobre: () => `Este é um terminal simulado com comandos básicos. Desenvolvido por Herbert.`,
@@ -226,24 +227,24 @@ document.querySelectorAll(".draggable").forEach(makeDraggable);
 const faqList = [
   {
     question: "Qual é o seu nome?",
-    answer: "Eu sou sua assistente virtual!"
+    answer: "Dale jogador, Meu nome é Ibura, sou seu assistente virtual, agora dar logo o papo menor!"
   },
   {
     question: "Que horas são?",
     answer: () => {
       const now = new Date();
-      return `Agora são ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}.`;
+      return `Meu irmão, tu não tem celular não é, precisa fazer uma pergunta besta dessa, sorte tua que preciso desse emprego visse, anota ai, Agora são ${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}.`;
     }
   },
 
   {
     question: "Qual o seu criador?",
-    answer: "Fui desenvolvida por Herbert."
+    answer: "Agora lascou, Pra quê tu quer saber?, vai pedir ele em namoro é? to de brinks, Fui desenvolvido por Herbert."
   },
 
   {
     question: "Fale um pouco sobre Herbert",
-    answer: "Herbert é um desenvolvedor Full-Stack com experiência em HTML, CSS,JavaScript, PHP e   Mysql. Ele gosta de criar interfaces de usuário interativas e acessíveis."
+    answer: "Herbert é um desenvolvedor Full-stak com experiência em HTML, CSS,JavaScript, PHP e Mysql. Ele gosta de criar interfaces de usuário interativas e acessíveis."
   },
   {
     question: "Como entro em contato com Herbert?",
@@ -251,11 +252,11 @@ const faqList = [
   },
   {
     question: "O que você pode fazer?",
-    answer: "Posso responder perguntas, fornecer informações básicas, abrir sites como LinkedIn e GitHub, e ajudar com tarefas simples relacionadas ao sistema."
+    answer: "aff, Hoje estou sem Paciência, vou tentar explicar para uma porta o que eu faço, só vou falar uma vez, ver se anota tchutchuco, Posso responder perguntas besta, fornecer informações básicas, abrir sites como LinkedIn e GitHub, e ajudar com tarefas simples relacionadas ao sistema."
   },
   {
     question: "Como acessar o manual?",
-    answer: "Digite 'manual' no terminal ou clique na opção Manual do Usuário."
+    answer: "Você é Burro é? , te falei isso no início, você não presta atenção nas coisas e dá nisso, vai boca aberta, Digite 'manual' no terminal ou clique na opção Manual do Usuário."
   },
   {
     question: "O que esse sistema faz?",
@@ -265,6 +266,24 @@ const faqList = [
     question: "pode abrir algum site?",
     answer: "Sim, posso abrir sites como LinkedIn e GitHub. Basta pedir, por exemplo: 'Abra o LinkedIn' ou 'Abra o GitHub'."
   },
+    {
+    question: "conta uma piada",
+    answer: "'Seu nome já é uma piada, pense no nome feio arretado'. se não gostou, digite 'não gostei dessa piada' , se gostou, digite 'essa eu gostei' ou então digite, 'conta outra piada' para ouvir outra piada."
+  },
+     {
+    question: "não gostei dessa piada",
+    answer: "'Problema é teu, tu também não gosta de nada, só sabe reclamar, vai trabalhar, ou então digite 'conta outra piada' para ouvir outra piada.'"
+  },
+    {
+    question: "conta outra piada",
+    answer: "Porque tem uma cama no polo norte? pro Urso polar. kkkkkkk se não gostou, digite 'não gostei dessa piada', se gostou, digite 'essa eu gostei' ou então digite, 'conta outra piada' para ouvir outra piada."
+  },
+     {
+    question: "essa eu gostei",
+    answer: "Que bom que gostou, meu irmão! . Agora Joga logo esse pix, nos peitos de Pai, chave pix: anota ai seu zé, é meu email: eita lembrei agora, eu não tenho email e nem pix, ferrou, como vou tirar dinheiro dos trouxa que nem tu, preciso ter uma D, R,com meu desenvolvedor, mas em fim, deixa quieto, vamos lá, o que mais tu quer saber? ou então digite 'manual' para ver o que posso fazer."
+  },
+    
+
   {
     question: "Desligue o sistema",
     answer: () => {
@@ -277,14 +296,14 @@ const faqList = [
     question: "Abra o manual",
     answer: () => {
       toggleWindow("manual");
-      return "Abrindo o manual do usuario...";
+      return "Que bicho preguiçoso e folgado, era só clicar em manual na area de trabalho,sorte sua que preciso desse emprego, la vai, Abrindo o manual do usuario...";
     }
   },
   {
     question: "mudar papel de parede",
     answer: () => {
       toggleWindow("wallpaper-selector");
-      return "Abrindo as opções de papeis de parede...";
+      return "Ainda bem que não tem a opção de colocar foto sua, de feio já basta seu nome kkkk, tô de brinks, Abrindo as opções de papeis de parede...";
     }
   },
 
@@ -342,7 +361,7 @@ function findFaqAnswer(userQuestion) {
 // Função que retorna a mensagem de ajuda
 function getHelpMessage() {
   const perguntas = faqList.map(faq => `- ${faq.question}`).join("<br>");
-  return `Aqui estão algumas perguntas que você pode me fazer:<br>${perguntas}`;
+  return `Dale calabrezo , Aqui estão algumas perguntas que você pode me fazer, se tiver coragem.:<br>${perguntas}`;
 }
 
 // JAVASCRIPT PARA O CHAT ASSISTENTE-------------------------------------------------------------------------
@@ -383,7 +402,7 @@ chatButton.addEventListener("click", () => {
     setTimeout(() => {
       chatInput.focus();
       if (!userName) {
-        const pergunta = "Olá! Qual é o seu nome?";
+        const pergunta = "Dale meu chegado! Qual é o seu Vulgo?";
         appendMessage("Assistente", pergunta, "bot");
         botSpeak(pergunta);
       } else {
@@ -404,7 +423,7 @@ chatForm.addEventListener("submit", function (e) {
   if (!userName) {
     userName = message;
     localStorage.setItem("userName", userName);
-    const greeting = `Prazer em conhecer você, ${userName}. Como posso te ajudar hoje? ou então digite 'manual' para ver o que posso fazer.`;
+    const greeting = `Meu mano, que nome feio da pouxa tu tem, mas em fim ,Prazer em conhecer você, ${userName}. Agora fala logo o que tu quer, eu tenho o que fazer! ou então digite 'manual' para ver o que posso fazer.`;
     appendMessage("Assistente", greeting, "bot");
     botSpeak(greeting);
     return;
@@ -428,7 +447,7 @@ chatForm.addEventListener("submit", function (e) {
   }
 
   // Resposta padrão se não encontrar na FAQ
-  const defaultMsg = "Desculpe, ainda não sei responder essa pergunta. Tente outra ou digite 'manual' para ver o que posso fazer.";
+  const defaultMsg = "Meu irmão, Ta de sacanegem né, alem de errar a escrita, ainda quer que responda o que não sei. Faz logo outra pergunta  seu zé, ou digite 'manual' para ver o que posso fazer.";
   appendMessage("Assistente", defaultMsg, "bot");
   botSpeak(defaultMsg);
 });
@@ -490,7 +509,7 @@ function updatePlayButton(speaking) {
 }
 
 function greetUser(name) {
-  const welcome = `Olá novamente, ${name}. Em que posso ajudar?`;
+  const welcome = `Meu irmão, tu novamente , ${name}. tem o que fazer não é, vai trabalhar pow, mas vai, dar logo o papo, o que é que tu quer?`;
   appendMessage("Assistente", welcome, "bot");
   botSpeak(welcome);
 }
@@ -547,6 +566,8 @@ document.querySelectorAll('.desktop-icon').forEach(icon => {
     }
   });
 });
+
+
 
 
 
