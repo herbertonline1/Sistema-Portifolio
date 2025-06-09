@@ -260,7 +260,7 @@ const faqList = [
   },
   {
     question: "O que esse sistema faz?",
-    answer: "Este é um sistema simulado que imita um desktop com funcionalidades básicas como terminal, assistente virtual e manual do usuário."
+    answer: "Faz Suco de manga , né fogo, Mas que pergunta besta, tô vendo que, vou ter que rodar de Uber , Dai-me paciência, mas em fim, Este é um sistema simulado que imita um desktop com funcionalidades básicas como terminal, assistente virtual e manual do usuário."
   },
   {
     question: "pode abrir algum site?",
