@@ -515,3 +515,10 @@ margin-right: auto;
 .submenu-container:hover .submenu {
   display: block;
 }
+
+
+
+
+#raceCanvas {
+  border: 2px solid #fff;
+}
