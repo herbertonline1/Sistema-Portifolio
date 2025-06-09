@@ -88,6 +88,8 @@
       <div class="submenu">
         <button class="submenu-option" data-window="campo-minado">🧨 Campo Minado</button>
         <button class="submenu-option" data-window="snake-game">🐍 Cobrinha</button>
+        <button class="submenu-option" data-window="race-game">🏎️ Corrida</button>
+
       </div>
     </div>
 
@@ -136,6 +138,23 @@
     <canvas id="snake-canvas" width="300" height="300" style="border: 1px solid #333; display: block; margin: auto;"></canvas>
   </div>
 </div>
+
+
+
+<!-- Janela Corrida -->
+<!-- Janela Corrida -->
+<div class="window" id="race-game" style="display: none; width: 420px; height: 640px;">
+  <div class="window-header">
+    <span>🏁 Corrida Futurista</span>
+    <button onclick="document.getElementById('race-game').style.display='none'">❌</button>
+  </div>
+  <div class="window-body" style="background: #000; padding: 0; position: relative;">
+    <canvas id="raceCanvas" width="400" height="600" style="display: block; margin: auto;"></canvas>
+    <button id="startButton" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); padding:10px 20px; background:#00ff99; border:none; color:black; font-weight:bold; border-radius:8px; cursor:pointer;">▶️ Iniciar Corrida</button>
+  </div>
+</div>
+
+
 
 <!--FIM JOGO CAMPO MINADO e COBRINHA -->
 
@@ -735,7 +754,177 @@ function closeWindow(id) {
   }
 }
 
-//FIM Jogos Campo Minado e cobrinha
+
+
+
+
+// Jogo de carro
+
+document.getElementById("startButton").addEventListener("click", () => {
+  document.getElementById("startButton").style.display = "none";
+  startRaceGame();
+});
+
+let canvas, ctx;
+let carImg = new Image();
+let obsImg = new Image();
+carImg.src = './img/carro.png';
+obsImg.src = 'img/cone.png';
+
+let car, obstacles, lines, gameOver, speed, left, right;
+let crashSound, engineSound, startSound;
+
+// Variáveis para controle de tempo
+let startTime;    // timestamp do início do jogo
+let elapsedTime = 0;  // tempo decorrido em milissegundos
+
+function initSounds() {
+  crashSound = new Audio("sounds/crash.mp3");
+  engineSound = new Audio("sounds/engine.mp3");
+  engineSound.loop = true;
+  startSound = new Audio("sounds/start.mp3");
+}
+
+function drawRoadLines() {
+  ctx.fillStyle = "white";
+  lines.forEach((line, i) => {
+    ctx.fillRect(canvas.width / 2 - 5, line.y, 10, 30);
+    line.y += speed;
+    if (line.y > canvas.height) line.y = -30;
+  });
+}
+
+function drawCar() {
+  ctx.drawImage(carImg, car.x, car.y, car.width, car.height);
+}
+
+function drawObstacle(obs) {
+  ctx.drawImage(obsImg, obs.x, obs.y, obs.width, obs.height);
+}
+
+function updateGame() {
+  if (gameOver) {
+    // Para o motor e calcula o tempo total jogado
+    engineSound.pause();
+
+    // Tempo total em segundos com 2 casas decimais
+    let totalTime = (elapsedTime / 1000).toFixed(2);
+
+    // Mostrar alerta com tempo total
+    alert(`💥 Batida! Fim de jogo!\nTempo total: ${totalTime} segundos`);
+
+    // Mostrar botão iniciar novamente
+    document.getElementById("startButton").style.display = "block";
+    return; // Para o loop do jogo
+  }
+
+  // Atualiza o tempo decorrido
+  elapsedTime = Date.now() - startTime;
+
+  ctx.fillStyle = "#333";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  drawRoadLines();
+
+  if (left && car.x > 10) car.x -= 5;
+  if (right && car.x + car.width < canvas.width - 10) car.x += 5;
+
+  drawCar();
+
+  obstacles.forEach((obs) => {
+    obs.y += speed;
+    drawObstacle(obs);
+
+    // Checa colisão
+    if (
+      car.x < obs.x + obs.width &&
+      car.x + car.width > obs.x &&
+      car.y < obs.y + obs.height &&
+      car.y + car.height > obs.y
+    ) {
+      crashSound.play();
+      gameOver = true;
+    }
+  });
+
+  // Remove obstáculos que saíram da tela
+  obstacles = obstacles.filter(o => o.y < canvas.height);
+
+  // Cria novos obstáculos aleatoriamente
+  if (Math.random() < 0.03) {
+    let x = Math.random() * (canvas.width - 50);
+    obstacles.push({ x: x, y: -60, width: 40, height: 60 });
+  }
+
+  // Desenha o tempo jogado no canto superior esquerdo
+  ctx.fillStyle = "white";
+  ctx.font = "20px Arial";
+  ctx.fillText(`Tempo: ${(elapsedTime / 1000).toFixed(2)}s`, 10, 30);
+
+  requestAnimationFrame(updateGame);
+}
+
+function startRaceGame() {
+  canvas = document.getElementById("raceCanvas");
+  if (!canvas) return;
+
+  ctx = canvas.getContext("2d");
+  initSounds();
+  startSound.play();
+
+  car = { x: 160, y: 450, width: 60, height: 100 };
+  obstacles = [];
+  lines = Array.from({ length: 10 }, (_, i) => ({ y: i * 60 }));
+  left = right = false;
+  speed = 4;
+  gameOver = false;
+
+  // Marca o início do jogo e zera tempo decorrido
+  startTime = Date.now();
+  elapsedTime = 0;
+
+  engineSound.play();
+  updateGame();
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft") left = true;
+  if (e.key === "ArrowRight") right = true;
+});
+document.addEventListener("keyup", e => {
+  if (e.key === "ArrowLeft") left = false;
+  if (e.key === "ArrowRight") right = false;
+});
+
+function openWindow(id) {
+  const win = document.getElementById(id);
+  if (win) win.style.display = "block";
+}
+
+// Ativa o jogo ao clicar no menu
+document.querySelector("[data-window='race-game']").addEventListener("click", () => {
+  openWindow("race-game");
+  setTimeout(startRaceGame, 300);
+});
+
+// Ativa botão iniciar
+document.getElementById("startButton").addEventListener("click", () => {
+  document.getElementById("startButton").style.display = "none";
+  startRaceGame();
+});
+
+// Ao abrir a janela, mostra o botão iniciar
+document.querySelector("[data-window='race-game']").addEventListener("click", () => {
+  openWindow("race-game");
+  setTimeout(() => {
+    document.getElementById("startButton").style.display = "block";
+  }, 300);
+});
+
+
+
+
+//FIM Jogos Campo Minado , cobrinha e carrinho
 </script>
 
 </html>
